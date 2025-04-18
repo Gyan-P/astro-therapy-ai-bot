@@ -1,13 +1,22 @@
 import type { NextAuthConfig } from 'next-auth';
+import GitHubProvider from 'next-auth/providers/github';
+import GoogleProvider from 'next-auth/providers/google';
 
 export const authConfig = {
+  secret: process.env.AUTH_SECRET,
   pages: {
     signIn: '/login',
     newUser: '/',
   },
   providers: [
-    // added later in auth.ts since it requires bcrypt which is only compatible with Node.js
-    // while this file is also used in non-Node.js environments
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+   GitHubProvider({
+    clientId: process.env.GITHUB_ID!,
+    clientSecret: process.env.GITHUB_SECRET!,
+  }),
   ],
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
