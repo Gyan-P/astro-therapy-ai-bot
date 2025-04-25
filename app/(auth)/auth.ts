@@ -16,8 +16,9 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
-  ...authConfig,
-  providers: [
+  ...authConfig, 
+  providers: [ 
+    authConfig.providers,
     Credentials({
       credentials: {},
       async authorize({ email, password }: any) {

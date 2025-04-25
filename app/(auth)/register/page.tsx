@@ -1,5 +1,7 @@
 'use client';
 
+import { getProviders, signIn } from 'next-auth/react';
+
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useActionState, useEffect, useState } from 'react';
@@ -11,6 +13,17 @@ import { register, type RegisterActionState } from '../actions';
 import { toast } from '@/components/toast';
 
 export default function Page() {
+  
+  const [providers, setProviders] = useState<Record<string, any> | null>(null);
+
+  useEffect(() => {
+    const fetchProviders = async () => {
+      const res = await getProviders();
+      setProviders(res);
+    };
+    fetchProviders();
+  }, []);
+
   const router = useRouter();
 
   const [email, setEmail] = useState('');
@@ -38,6 +51,7 @@ export default function Page() {
 
       setIsSuccessful(true);
       router.refresh();
+     // router.push('/chat');
     }
   }, [state]);
 
@@ -57,6 +71,23 @@ export default function Page() {
         </div>
         <AuthForm action={handleSubmit} defaultEmail={email}>
           <SubmitButton isSuccessful={isSuccessful}>Sign Up</SubmitButton>
+                    {typeof window !== 'undefined' && providers && ( 
+            <div className="mt-6 space-y-2">
+              {Object.values(providers).map((provider) => {
+                if (provider.id === 'credentials') return null;
+                return (
+                  <button
+                    key={provider.name}
+                    onClick={() => signIn(provider.id, { callbackUrl: '/' })}
+                    className="w-full border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-100 dark:hover:bg-zinc-700 dark:text-white"
+                  >
+                    Sign up with {provider.name}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
           <p className="text-center text-sm text-gray-600 mt-4 dark:text-zinc-400">
             {'Already have an account? '}
             <Link
@@ -67,6 +98,10 @@ export default function Page() {
             </Link>
             {' instead.'}
           </p>
+          
+          <button onClick={() => signIn('google')}>Sign in with Google Test</button>
+          <button onClick={() => signIn('github')}>Sign in with GitHub Test</button>
+          
         </AuthForm>
       </div>
     </div>

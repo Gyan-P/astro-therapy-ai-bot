@@ -18,12 +18,27 @@ export const authConfig = {
     clientSecret: process.env.GITHUB_SECRET!,
   }),
   ],
+  
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
+      // const isOnRegister = nextUrl.pathname === '/register';
+      // const isOnLogin = nextUrl.pathname === '/login';
       const isOnChat = nextUrl.pathname.startsWith('/');
       const isOnRegister = nextUrl.pathname.startsWith('/register');
       const isOnLogin = nextUrl.pathname.startsWith('/login');
+
+      //     // Allow register/login pages for everyone
+      // if (isOnLogin || isOnRegister) {
+      //   return true;
+      // }
+
+      //     // Protect all other pages
+      // if (!isLoggedIn) {
+      //   return false;
+      // }
+
+      // return true;
 
       if (isLoggedIn && (isOnLogin || isOnRegister)) {
         return Response.redirect(new URL('/', nextUrl as unknown as URL));

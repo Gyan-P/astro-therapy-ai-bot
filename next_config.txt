@@ -1,0 +1,41 @@
+
+//next.config.ts
+// import type { NextConfig } from 'next';
+
+// const nextConfig: NextConfig = {
+//   experimental: {
+//     appDir: true,
+//     ppr: true,
+//   },
+//   images: {
+//     remotePatterns: [
+//       {
+//         hostname: 'avatar.vercel.sh',
+//       },
+//     ],
+//   },
+// };
+
+//next.config.mjs
+
+// export default nextConfig;
+
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {
+//   reactStrictMode: true,
+//   experimental: {
+//     appDir: true,
+//     ppr: true,
+//   },
+//   images: {
+//     remotePatterns: [
+//       {
+//         hostname: 'avatar.vercel.sh',
+//       },
+//     ],
+//   },
+// };
+
+// export default nextConfig;
+
+

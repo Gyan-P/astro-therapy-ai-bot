@@ -54,27 +54,34 @@ export default function Page() {
     formAction(formData);
   };
 
-  useEffect(() => {
-    const fetchProviders = async () => {
-      const res = await getProviders();
-      console.log('🧪 OAuth Providers:', res); // 👈 Add this
-      setProviders(res);
-    };
-    fetchProviders();
-  }, []);
-
+  // useEffect(() => {
+  //   const fetchProviders = async () => {
+  //     const res = await getProviders();
+  //     console.log('🧪 OAuth Providers:', res); // 👈 Add this
+  //     setProviders(res);
+  //   };
+  //   fetchProviders();
+  // }, []);
+  console.log('🚀 login page rendered');
   return (
     <div className="flex h-dvh w-screen items-start pt-12 md:pt-0 md:items-center justify-center bg-background">
+     
       <div className="w-full max-w-md overflow-hidden rounded-2xl flex flex-col gap-12">
         <div className="flex flex-col items-center justify-center gap-2 px-4 text-center sm:px-16">
           <h3 className="text-xl font-semibold dark:text-zinc-50">Sign In</h3>
           <p className="text-sm text-gray-500 dark:text-zinc-400">
-            Use your email and password to sign in
+            Use your email and password to sign in Hello
           </p>
         </div>
+        
+        {/* <p>Hello</p>
+        <button onClick={() => signIn('google')}>Sign in with Google Test</button>
+        <button onClick={() => signIn('github')}>Sign in with GitHub Test</button>
+           */}
+        
         <AuthForm action={handleSubmit} defaultEmail={email}>
           <SubmitButton isSuccessful={isSuccessful}>Sign in</SubmitButton>
-                      {providers && (
+                      {typeof window !== 'undefined' && providers && (
               <div className="mt-6 space-y-2">
                 {Object.values(providers).map((provider) => {
                   if (provider.id === 'credentials') return null; // Skip email/password
@@ -96,11 +103,10 @@ export default function Page() {
               href="/register"
               className="font-semibold text-gray-800 hover:underline dark:text-zinc-200"
             >
-              Sign up
+              Sign up hello
             </Link>
             {' for free.'}
           </p>
-          
         </AuthForm>
       </div>
     </div>
